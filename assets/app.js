@@ -241,8 +241,15 @@ async function signUp() {
   const { error } = await supabaseClient.auth.signUp({
     email: emailInput.value.trim(),
     password: passwordInput.value,
+    options: {
+      emailRedirectTo: getAppUrl(),
+    },
   });
   authMessage.textContent = error ? error.message : "Account created. Check your email if confirmation is enabled.";
+}
+
+function getAppUrl() {
+  return `${window.location.origin}${window.location.pathname}`;
 }
 
 async function hydrateTickets() {
