@@ -1,0 +1,71 @@
+Group A
+MEX - Mexico
+RSA - South Africa
+KOR - South Korea
+CZE - Czech Republic
+
+Group B
+CAN - Canada
+SUI - Switzerland
+QAT - Qatar
+BIH - Bosnia and Herzegovina
+
+Group C
+BRA - Brazil
+MAR - Morocco
+HAI - Haiti
+SCO - Scotland
+
+Group D
+USA - United States
+PAR - Paraguay
+AUS - Australia
+TUR - Turkey
+
+Group E
+GER - Germany
+CUW - Curaçao
+CIV - Ivory Coast
+ECU - Ecuador
+
+Group F
+NED - Netherlands
+JPN - Japan
+TUN - Tunisia
+SWE - Sweden
+
+Group G
+BEL - Belgium
+EGY - Egypt
+IRN - Iran
+NZL - New Zealand
+
+Group H
+ESP - Spain
+CPV - Cape Verde
+KSA - Saudi Arabia
+URU - Uruguay
+
+Group I
+FRA - France
+SEN - Senegal
+NOR - Norway
+IRQ - Iraq
+
+Group J
+ARG - Argentina
+ALG - Algeria
+AUT - Austria
+JOR - Jordan
+
+Group K
+POR - Portugal
+UZB - Uzbekistan
+COL - Colombia
+COD - DR Congo
+
+Group L
+ENG - England
+CRO - Croatia
+GHA - Ghana
+PAN - Panama

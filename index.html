@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>WC26 Album Tracker</title>
+    <link rel="stylesheet" href="assets/styles.css" />
+    <script type="module" src="assets/app.js"></script>
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <a class="brand" href="#/" aria-label="WC26 Album Tracker home">
+          <span class="brand-mark">26</span>
+          <span>
+            <strong>WC26 Album Tracker</strong>
+            <small>Tickets needed by team</small>
+          </span>
+        </a>
+
+        <nav class="top-actions" aria-label="Account">
+          <span id="syncStatus" class="sync-status">Loading</span>
+          <button id="authButton" class="button primary" type="button">Sign in</button>
+          <button id="signOutButton" class="button ghost hidden" type="button">Sign out</button>
+        </nav>
+      </header>
+
+      <main id="app" class="content" tabindex="-1"></main>
+    </div>
+
+    <section id="printReport" class="print-report" aria-hidden="true"></section>
+
+    <dialog id="authDialog" class="auth-dialog">
+      <form id="authForm" method="dialog" class="auth-panel">
+        <div class="dialog-head">
+          <div>
+            <h2>Account</h2>
+            <p>Sign in to sync your album across devices.</p>
+          </div>
+          <button class="icon-button" type="button" id="closeAuth" aria-label="Close">&times;</button>
+        </div>
+
+        <label>
+          Email
+          <input id="emailInput" type="email" autocomplete="email" required />
+        </label>
+
+        <label>
+          Password
+          <input id="passwordInput" type="password" autocomplete="current-password" minlength="6" required />
+        </label>
+
+        <p id="authMessage" class="form-message" role="status"></p>
+
+        <div class="dialog-actions">
+          <button id="signInSubmit" class="button primary" type="submit">Sign in</button>
+          <button id="signUpSubmit" class="button secondary" type="button">Create account</button>
+        </div>
+      </form>
+    </dialog>
+  </body>
+</html>
