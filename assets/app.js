@@ -20,9 +20,9 @@ const TICKET_DATA = [
     group: "Group B",
     teams: [
       team("CAN", "Canada", "ca"),
-      team("SUI", "Switzerland", "ch"),
-      team("QAT", "Qatar", "qa"),
       team("BIH", "Bosnia and Herzegovina", "ba"),
+      team("QAT", "Qatar", "qa"),
+      team("SUI", "Switzerland", "ch"),
     ],
   },
   {
@@ -57,8 +57,8 @@ const TICKET_DATA = [
     teams: [
       team("NED", "Netherlands", "nl"),
       team("JPN", "Japan", "jp"),
-      team("TUN", "Tunisia", "tn"),
       team("SWE", "Sweden", "se"),
+      team("TUN", "Tunisia", "tn"),
     ],
   },
   {
@@ -84,8 +84,9 @@ const TICKET_DATA = [
     teams: [
       team("FRA", "France", "fr"),
       team("SEN", "Senegal", "sn"),
-      team("NOR", "Norway", "no"),
       team("IRQ", "Iraq", "iq"),
+      team("NOR", "Norway", "no"),
+      
     ],
   },
   {
@@ -101,9 +102,10 @@ const TICKET_DATA = [
     group: "Group K",
     teams: [
       team("POR", "Portugal", "pt"),
+      team("COD", "DR Congo", "cd"),
       team("UZB", "Uzbekistan", "uz"),
       team("COL", "Colombia", "co"),
-      team("COD", "DR Congo", "cd"),
+      
     ],
   },
   {
@@ -207,6 +209,12 @@ function bindEvents() {
   });
 
   app.addEventListener("click", async (event) => {
+    const navButton = event.target.closest("[data-team-nav]");
+    if (navButton) {
+      goToTeam(navButton.dataset.teamNav);
+      return;
+    }
+
     const printButton = event.target.closest("[data-print-remaining]");
     if (printButton) {
       printRemainingTickets();
@@ -218,6 +226,21 @@ function bindEvents() {
     const teamCode = ticketButton.dataset.team;
     const ticketNo = ticketButton.dataset.ticket;
     await toggleTicket(teamCode, ticketNo);
+  });
+
+  window.addEventListener("keydown", (event) => {
+    const route = getRoute();
+    if (route.name !== "team" || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+
+    if (event.key === "ArrowLeft") {
+      event.preventDefault();
+      goToAdjacentTeam(route.code, -1);
+    }
+
+    if (event.key === "ArrowRight") {
+      event.preventDefault();
+      goToAdjacentTeam(route.code, 1);
+    }
   });
 }
 
@@ -397,10 +420,27 @@ function renderTeam(code) {
 
   const owned = countOwned(item);
   const missing = item.tickets.length - owned;
+  const adjacent = getAdjacentTeams(item.code);
   app.innerHTML = `
     ${configNotice()}
     <div class="team-toolbar">
       <a class="button ghost" href="#/">Back to groups</a>
+      <div class="team-nav">
+        <button
+          class="button ghost"
+          type="button"
+          data-team-nav="${adjacent.prev?.code ?? ""}"
+          ${adjacent.prev ? "" : "disabled"}
+          aria-label="Previous team"
+        >&larr; ${adjacent.prev?.code ?? "Prev"}</button>
+        <button
+          class="button ghost"
+          type="button"
+          data-team-nav="${adjacent.next?.code ?? ""}"
+          ${adjacent.next ? "" : "disabled"}
+          aria-label="Next team"
+        >${adjacent.next?.code ?? "Next"} &rarr;</button>
+      </div>
       <button class="button secondary" type="button" data-select-all="${item.code}">Mark all owned</button>
     </div>
 
@@ -565,6 +605,24 @@ function getTotals() {
     missing: total - owned,
     percent: total === 0 ? 0 : Math.round((owned / total) * 100),
   };
+}
+
+function getAdjacentTeams(teamCode) {
+  const index = allTeams.findIndex((item) => item.code === teamCode);
+  return {
+    prev: index > 0 ? allTeams[index - 1] : null,
+    next: index >= 0 && index < allTeams.length - 1 ? allTeams[index + 1] : null,
+  };
+}
+
+function goToAdjacentTeam(teamCode, direction) {
+  const adjacent = getAdjacentTeams(teamCode);
+  goToTeam(direction < 0 ? adjacent.prev?.code : adjacent.next?.code);
+}
+
+function goToTeam(teamCode) {
+  if (!teamCode || !teamByCode.has(teamCode)) return;
+  window.location.hash = `#/team/${teamCode}`;
 }
 
 function ticketKey(teamCode, ticketNo) {

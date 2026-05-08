@@ -318,6 +318,11 @@ a {
   margin: 20px 0;
 }
 
+.team-nav {
+  display: inline-flex;
+  gap: 8px;
+}
+
 .team-identity {
   display: flex;
   align-items: center;
@@ -494,6 +499,14 @@ input {
   .top-actions,
   .team-toolbar {
     justify-content: flex-start;
+  }
+
+  .team-nav {
+    width: 100%;
+  }
+
+  .team-nav .button {
+    flex: 1;
   }
 
   .summary-grid {
