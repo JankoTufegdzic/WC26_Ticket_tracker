@@ -178,7 +178,13 @@ function setupSupabase() {
     !config.supabaseAnonKey.includes("YOUR_");
 
   if (configured) {
-    supabaseClient = createClient(config.supabaseUrl, config.supabaseAnonKey);
+    supabaseClient = createClient(config.supabaseUrl, config.supabaseAnonKey, {
+      auth: {
+        storage: window.sessionStorage,
+        persistSession: true,
+        autoRefreshToken: true,
+      },
+    });
   }
 }
 
@@ -444,19 +450,7 @@ function renderTeam(code) {
       <button class="button secondary" type="button" data-select-all="${item.code}">Mark all owned</button>
     </div>
 
-    <section class="page-head">
-      <div class="team-identity">
-        ${renderFlag(item)}
-        <div>
-          <h1>${escapeHtml(item.name)}</h1>
-          <p>${escapeHtml(item.group)} · ${item.code} · ${owned} owned · ${missing} needed</p>
-        </div>
-      </div>
-    </section>
-
-    <section class="ticket-grid" aria-label="${escapeHtml(item.name)} ticket numbers">
-      ${item.tickets.map((ticketNo) => renderTicketButton(item.code, ticketNo)).join("")}
-    </section>
+    ${renderAlbumSpread(item, owned, missing)}
   `;
 
   const selectAll = app.querySelector("[data-select-all]");
@@ -468,6 +462,30 @@ function renderTeam(code) {
     }
     render();
   });
+}
+
+function renderAlbumSpread(item, owned, missing) {
+  const leftTickets = item.tickets.slice(0, 10);
+  const rightTickets = item.tickets.slice(10, 20);
+
+  return `
+    <section class="album-spread" aria-label="${escapeHtml(item.name)} ticket album pages">
+      <article class="album-page album-page-left">
+        <div class="album-team-panel">
+          ${renderFlag(item)}
+          <span class="album-team-code">${item.code}</span>
+          <h1>${escapeHtml(item.name)}</h1>
+          <p>${escapeHtml(item.group)} · ${owned} owned · ${missing} needed</p>
+        </div>
+        ${leftTickets.map((ticketNo) => renderTicketButton(item.code, ticketNo)).join("")}
+      </article>
+
+      <article class="album-page album-page-right">
+        <div class="album-empty-slot" aria-hidden="true"></div>
+        ${rightTickets.map((ticketNo) => renderTicketButton(item.code, ticketNo, ticketNo === "13" ? "ticket-landscape" : "")).join("")}
+      </article>
+    </section>
+  `;
 }
 
 function renderFlag(item) {
@@ -530,11 +548,11 @@ function printRemainingTickets() {
   window.print();
 }
 
-function renderTicketButton(teamCode, ticketNo) {
+function renderTicketButton(teamCode, ticketNo, extraClass = "") {
   const owned = ownedTickets.has(ticketKey(teamCode, ticketNo));
   return `
     <button
-      class="ticket-button ${owned ? "owned" : ""}"
+      class="ticket-button ${extraClass} ${owned ? "owned" : ""}"
       type="button"
       data-team="${teamCode}"
       data-ticket="${ticketNo}"

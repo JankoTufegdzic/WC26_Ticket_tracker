@@ -323,37 +323,102 @@ a {
   gap: 8px;
 }
 
-.team-identity {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-}
-
-.team-identity .flag {
-  width: 70px;
-  height: 70px;
-}
-
-.team-identity .flag-fallback {
-  font-size: 2.5rem;
-}
-
-.ticket-grid {
+.album-spread {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(74px, 1fr));
-  gap: 10px;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  align-items: start;
+}
+
+.album-page {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(8px, 1.4vw, 14px);
+  min-height: 520px;
+  padding: clamp(14px, 2vw, 22px);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background:
+    linear-gradient(135deg, rgba(11, 107, 203, 0.12), transparent 32%),
+    linear-gradient(315deg, rgba(15, 123, 85, 0.14), transparent 30%),
+    var(--surface);
+  box-shadow: var(--shadow);
+}
+
+.album-page-left {
+  border-right: 5px solid #d6dde8;
+}
+
+.album-page-right {
+  border-left: 5px solid #d6dde8;
+}
+
+.album-team-panel {
+  display: grid;
+  grid-column: span 2;
+  min-height: 150px;
+  align-content: center;
+  justify-items: start;
+  gap: 8px;
+  padding: 14px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.72);
+  color: var(--text);
+}
+
+.album-team-panel .flag {
+  width: 62px;
+  height: 42px;
+  border: 1px solid var(--line);
+}
+
+.album-team-panel .flag-fallback {
+  height: 62px;
+  font-size: 2.4rem;
+}
+
+.album-team-code {
+  color: var(--primary-strong);
+  font-size: 0.8rem;
+  font-weight: 850;
+}
+
+.album-team-panel h1,
+.album-team-panel p {
+  margin: 0;
+}
+
+.album-team-panel h1 {
+  font-size: clamp(1.15rem, 2.2vw, 1.85rem);
+  line-height: 1.05;
+}
+
+.album-team-panel p {
+  color: var(--muted);
+  font-size: 0.86rem;
+}
+
+.album-empty-slot {
+  min-height: 110px;
 }
 
 .ticket-button {
   display: grid;
-  min-height: 64px;
+  min-height: 110px;
   place-items: center;
   border: 1px solid var(--line);
   border-radius: 8px;
-  background: var(--surface);
+  background:
+    radial-gradient(circle at 50% 34%, rgba(11, 107, 203, 0.08), transparent 36%),
+    var(--surface);
   color: var(--text);
-  font-size: 1.1rem;
+  font-size: clamp(1.05rem, 2.4vw, 1.6rem);
   font-weight: 800;
+}
+
+.ticket-landscape {
+  grid-column: span 2;
+  min-height: 110px;
 }
 
 .ticket-button:hover,
@@ -511,6 +576,14 @@ input {
 
   .summary-grid {
     grid-template-columns: 1fr;
+  }
+
+  .album-spread {
+    grid-template-columns: 1fr;
+  }
+
+  .album-page {
+    min-height: 0;
   }
 
   .sync-status {
