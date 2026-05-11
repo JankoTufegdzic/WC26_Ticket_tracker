@@ -7,6 +7,8 @@ import { escapeHtml, ticketKey } from "./utils.js";
 
 const leftPositions = ["slot-c3", "slot-c4", "slot-c1", "slot-c2", "slot-c3", "slot-c4", "slot-c1", "slot-c2", "slot-c3", "slot-c4"];
 const rightPositions = ["slot-c1", "slot-c2", "slot-c3 span-2", "slot-c1", "slot-c2", "slot-c3", "slot-c4", "slot-c2", "slot-c3", "slot-c4"];
+const sixPerPageLeftPositions = ["slot-c3", "slot-c4", "slot-c1", "slot-c2", "slot-c3", "slot-c4"];
+const sixPerPageRightPositions = ["slot-c1", "slot-c2", "slot-c3", "slot-c4", "slot-c1", "slot-c2"];
 
 export function renderLockedHtml(hasSupabase) {
   const title = hasSupabase ? "Sign in required" : "Supabase setup required";
@@ -142,6 +144,10 @@ function renderTeamCard(item, countOwned) {
 }
 
 function renderAlbumSpread(item, owned, missing) {
+  if (item.layout === "sixPerPage") {
+    return renderSixPerPageSpread(item, owned, missing);
+  }
+
   const leftTickets = item.tickets.slice(0, 10);
   const rightTickets = item.tickets.slice(10, 20);
 
@@ -164,9 +170,33 @@ function renderAlbumSpread(item, owned, missing) {
   `;
 }
 
+function renderSixPerPageSpread(item, owned, missing) {
+  const leftTickets = item.tickets.slice(0, 6);
+  const rightTickets = item.tickets.slice(6, 12);
+
+  return `
+    <section class="album-spread" aria-label="${escapeHtml(item.name)} ticket album pages">
+      <article class="album-page album-page-left">
+        <div class="album-team-panel">
+          ${renderFlag(item)}
+          <span class="album-team-code">${item.code}</span>
+          <h1>${escapeHtml(item.name)}</h1>
+          <p>${escapeHtml(item.group)} &middot; ${owned} owned &middot; ${missing} needed</p>
+        </div>
+        ${leftTickets.map((ticketNo, index) => renderTicketButton(item.code, ticketNo, sixPerPageLeftPositions[index])).join("")}
+      </article>
+
+      <article class="album-page album-page-right">
+        ${rightTickets.map((ticketNo, index) => renderTicketButton(item.code, ticketNo, sixPerPageRightPositions[index])).join("")}
+      </article>
+    </section>
+  `;
+}
+
 function renderFlag(item) {
   if (!item.flagCode) {
-    return `<span class="flag flag-fallback" aria-hidden="true">${escapeHtml(item.flagFallback)}</span>`;
+    const logoClass = item.logoClass ? ` ${escapeHtml(item.logoClass)}` : "";
+    return `<span class="flag flag-fallback${logoClass}" aria-hidden="true">${escapeHtml(item.flagFallback)}</span>`;
   }
 
   const code = encodeURIComponent(item.flagCode);

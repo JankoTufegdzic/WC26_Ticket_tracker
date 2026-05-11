@@ -3,7 +3,19 @@
 export const TICKET_DATA = [
   {
     group: "FWC",
-    teams: [{ code: "FWC", name: "FIFA World Cup", flagCode: null, flagFallback: "\u{1F3C6}", tickets: ["00", ...range(1, 19)] }],
+    teams: [
+      { code: "FWC", name: "FIFA World Cup", flagCode: null, flagFallback: "\u{1F3C6}", tickets: ["00", ...range(1, 19)] },
+      {
+        code: "CC",
+        name: "Coca-Cola",
+        flagCode: null,
+        flagFallback: "Coca-Cola",
+        logoClass: "coca-cola-logo",
+        tickets: range(1, 12),
+        layout: "sixPerPage",
+        includeInTotals: false,
+      },
+    ],
   },
   {
     group: "Group A",

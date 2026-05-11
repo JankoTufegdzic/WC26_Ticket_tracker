@@ -13,8 +13,9 @@ export function getRemainingTickets(item) {
 }
 
 export function getTotals() {
-  const total = allTeams.reduce((sum, item) => sum + item.tickets.length, 0);
-  const owned = allTeams.reduce((sum, item) => sum + countOwned(item), 0);
+  const countedTeams = allTeams.filter((item) => item.includeInTotals !== false);
+  const total = countedTeams.reduce((sum, item) => sum + item.tickets.length, 0);
+  const owned = countedTeams.reduce((sum, item) => sum + countOwned(item), 0);
   return {
     total,
     owned,

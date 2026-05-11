@@ -229,6 +229,16 @@ a {
   font-weight: 800;
 }
 
+.coca-cola-logo {
+  width: 92px;
+  background: #e61d2b;
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 0.9rem;
+  font-style: italic;
+  letter-spacing: 0;
+}
+
 .team-name {
   display: block;
   overflow-wrap: anywhere;
@@ -376,6 +386,12 @@ a {
 .album-team-panel .flag-fallback {
   height: 62px;
   font-size: 2.4rem;
+}
+
+.album-team-panel .coca-cola-logo {
+  width: 118px;
+  height: 54px;
+  font-size: 1rem;
 }
 
 .album-team-code {
