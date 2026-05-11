@@ -220,7 +220,8 @@ a {
   display: block;
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
+  object-position: center;
 }
 
 .flag-fallback {
@@ -370,6 +371,7 @@ a {
   width: 62px;
   height: 42px;
   border: 1px solid var(--line);
+  justify-self: center;
 }
 
 .album-team-panel .flag-fallback {
@@ -604,7 +606,7 @@ input {
 
 @media print {
   @page {
-    margin: 14mm;
+    margin: 14mm 14mm 24mm;
   }
 
   body {
@@ -624,6 +626,7 @@ input {
   .print-page {
     font-family: Arial, sans-serif;
     font-size: 11pt;
+    padding-bottom: 18mm;
   }
 
   .print-page h1 {
@@ -645,6 +648,7 @@ input {
     grid-template-columns: 42mm 1fr;
     gap: 6mm;
     break-inside: avoid;
+    page-break-inside: avoid;
   }
 
   .print-row strong,

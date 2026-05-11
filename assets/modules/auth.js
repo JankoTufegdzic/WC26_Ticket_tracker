@@ -34,17 +34,19 @@ export function setupSupabase() {
 }
 
 export async function signIn() {
-  if (!state.supabaseClient) return;
+  if (!state.supabaseClient) return false;
   elements.authMessage.textContent = "Signing in...";
-  const { error } = await state.supabaseClient.auth.signInWithPassword({
+  const { data, error } = await state.supabaseClient.auth.signInWithPassword({
     email: elements.emailInput.value.trim(),
     password: elements.passwordInput.value,
   });
   if (error) {
     elements.authMessage.textContent = error.message;
-    return;
+    return false;
   }
+  state.currentUser = data.user ?? null;
   elements.authDialog.close();
+  return true;
 }
 
 export async function signUp() {
@@ -64,6 +66,8 @@ export async function signOut() {
   if (state.supabaseClient) {
     await state.supabaseClient.auth.signOut();
   }
+  state.currentUser = null;
+  state.ownedTickets = new Set();
 }
 
 export async function hydrateTickets() {

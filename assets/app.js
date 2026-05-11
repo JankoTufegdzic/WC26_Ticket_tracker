@@ -49,7 +49,11 @@ function bindEvents() {
 
   elements.authForm.addEventListener("submit", async (event) => {
     event.preventDefault();
-    await signIn();
+    const signedIn = await signIn();
+    if (signedIn) {
+      await hydrateTickets();
+      render();
+    }
   });
 
   elements.signUpSubmit.addEventListener("click", async () => {
@@ -58,6 +62,8 @@ function bindEvents() {
 
   elements.signOutButton.addEventListener("click", async () => {
     await signOut();
+    await hydrateTickets();
+    render();
   });
 
   elements.app.addEventListener("click", async (event) => {
