@@ -371,7 +371,6 @@ a {
   width: 62px;
   height: 42px;
   border: 1px solid var(--line);
-  justify-self: center;
 }
 
 .album-team-panel .flag-fallback {
