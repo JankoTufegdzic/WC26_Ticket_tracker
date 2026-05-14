@@ -621,7 +621,7 @@ input {
 
 @media print {
   @page {
-    margin: 14mm 14mm 24mm;
+    margin: 14mm 14mm 34mm;
   }
 
   body {
@@ -641,7 +641,7 @@ input {
   .print-page {
     font-family: Arial, sans-serif;
     font-size: 11pt;
-    padding-bottom: 18mm;
+    padding-bottom: 34mm;
   }
 
   .print-page h1 {
@@ -661,8 +661,8 @@ input {
   .print-group {
     display: grid;
     gap: 1mm;
-    break-inside: avoid;
-    page-break-inside: avoid;
+    break-inside: auto;
+    page-break-inside: auto;
   }
 
   .print-group h2 {
