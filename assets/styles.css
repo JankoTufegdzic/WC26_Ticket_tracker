@@ -621,7 +621,7 @@ input {
 
 @media print {
   @page {
-    margin: 10mm 12mm 24mm;
+    margin: 14mm 14mm 34mm;
   }
 
   body {
@@ -640,53 +640,48 @@ input {
 
   .print-page {
     font-family: Arial, sans-serif;
-    font-size: 10pt;
-    padding-bottom: 10mm;
+    font-size: 11pt;
+    padding-bottom: 24mm;
   }
 
   .print-page h1 {
-    margin: 0 0 3mm;
-    font-size: 16pt;
+    margin: 0 0 4mm;
+    font-size: 18pt;
   }
 
   .print-page p {
-    margin: 0 0 5mm;
+    margin: 0 0 7mm;
   }
 
   .print-list {
     display: grid;
-    gap: 0;
+    gap: 2mm;
   }
 
   .print-group {
     display: grid;
-    gap: 1mm;
-    break-inside: avoid;
-    page-break-inside: avoid;
-  }
-
-  .print-group + .print-group {
-    break-before: page;
-    page-break-before: always;
+    gap: 0.5mm;
+    break-inside: auto;
+    page-break-inside: auto;
   }
 
   .print-group h2 {
     margin: 0;
     border-bottom: 0.3mm solid #000;
-    padding-bottom: 1mm;
-    font-size: 12pt;
+    padding-bottom: 0.5mm;
+    font-size: 13pt;
   }
 
   .print-row {
     display: grid;
-    grid-template-columns: 30mm 1fr;
-    gap: 3mm;
+    grid-template-columns: 42mm 1fr;
+    gap: 4mm;
     break-inside: avoid;
     page-break-inside: avoid;
   }
 
   .print-row strong,
   .print-row span {
-    line-height: 1.22;
+    line-height: 1.16;
   }
 }
