@@ -135,6 +135,32 @@ a {
   margin-bottom: 26px;
 }
 
+.search-panel {
+  display: grid;
+  gap: 8px;
+  margin-bottom: 20px;
+}
+
+.search-input {
+  width: min(520px, 100%);
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  padding: 12px 14px;
+  color: var(--text);
+  box-shadow: var(--shadow);
+}
+
+.search-input:focus {
+  border-color: var(--primary);
+  outline: none;
+}
+
+.search-empty {
+  margin: 0;
+  color: var(--muted);
+}
+
 .metric {
   padding: 16px;
   border: 1px solid var(--line);

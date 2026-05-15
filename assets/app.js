@@ -70,6 +70,12 @@ function bindEvents() {
     render();
   });
 
+  elements.app.addEventListener("input", (event) => {
+    const searchInput = event.target.closest("[data-team-search]");
+    if (!searchInput) return;
+    filterTeamCards(searchInput.value);
+  });
+
   elements.app.addEventListener("click", async (event) => {
     const openAuth = event.target.closest("[data-open-auth]");
     if (openAuth) {
@@ -114,6 +120,31 @@ function bindEvents() {
       goToAdjacentTeam(route.code, 1);
     }
   });
+}
+
+function filterTeamCards(query) {
+  const normalizedQuery = query.trim().toLowerCase();
+  const groups = [...elements.app.querySelectorAll("[data-group-section]")];
+  let visibleCount = 0;
+
+  for (const group of groups) {
+    const cards = [...group.querySelectorAll("[data-team-card]")];
+    let visibleInGroup = 0;
+
+    for (const card of cards) {
+      const matches = !normalizedQuery || card.dataset.searchText.includes(normalizedQuery);
+      card.classList.toggle("hidden", !matches);
+      if (matches) visibleInGroup += 1;
+    }
+
+    group.classList.toggle("hidden", visibleInGroup === 0);
+    visibleCount += visibleInGroup;
+  }
+
+  const emptyState = elements.app.querySelector("[data-search-empty]");
+  if (emptyState) {
+    emptyState.classList.toggle("hidden", visibleCount > 0);
+  }
 }
 
 function openAuthDialog() {

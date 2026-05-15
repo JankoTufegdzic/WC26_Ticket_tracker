@@ -44,6 +44,11 @@ export function renderHomeHtml({ totals, countOwned }) {
       <button class="button secondary" type="button" data-print-remaining>Print remaining PDF</button>
     </section>
 
+    <section class="search-panel" aria-label="Search collections">
+      <input class="search-input" type="search" placeholder="Search country, FWC, Coca-Cola, or code" data-team-search />
+      <p class="search-empty hidden" data-search-empty>No matching collections.</p>
+    </section>
+
     <section class="summary-grid" aria-label="Album summary">
       <article class="metric"><span>Owned</span><strong>${totals.owned}</strong></article>
       <article class="metric"><span>Still needed</span><strong>${totals.missing}</strong></article>
@@ -127,7 +132,7 @@ function renderGroup(group, countOwned) {
   const owned = group.teams.reduce((sum, item) => sum + countOwned(item), 0);
   const total = group.teams.reduce((sum, item) => sum + item.tickets.length, 0);
   return `
-    <section class="group-section">
+    <section class="group-section" data-group-section>
       <div class="group-title">
         <h2>${escapeHtml(group.group)}</h2>
         <span>${owned}/${total} owned</span>
@@ -142,8 +147,9 @@ function renderGroup(group, countOwned) {
 function renderTeamCard(item, countOwned) {
   const owned = countOwned(item);
   const percent = Math.round((owned / item.tickets.length) * 100);
+  const searchText = `${item.code} ${item.name}`.toLowerCase();
   return `
-    <a class="team-card" href="#/team/${item.code}" aria-label="${escapeHtml(item.name)} tickets">
+    <a class="team-card" href="#/team/${item.code}" aria-label="${escapeHtml(item.name)} tickets" data-team-card data-search-text="${escapeHtml(searchText)}">
       ${renderFlag(item)}
       <span>
         <span class="team-code">${item.code}</span>
