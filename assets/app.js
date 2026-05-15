@@ -73,6 +73,12 @@ function bindEvents() {
   elements.app.addEventListener("input", (event) => {
     const searchInput = event.target.closest("[data-team-search]");
     if (!searchInput) return;
+
+    if (searchInput.dataset.teamSearch === "navigate") {
+      navigateFromSearch(searchInput.value);
+      return;
+    }
+
     filterTeamCards(searchInput.value);
   });
 
@@ -120,6 +126,19 @@ function bindEvents() {
       goToAdjacentTeam(route.code, 1);
     }
   });
+}
+
+function navigateFromSearch(query) {
+  const normalizedQuery = query.trim().toLowerCase();
+  if (!normalizedQuery) return;
+
+  const exactMatch = TICKET_DATA.flatMap((group) => group.teams).find((item) => {
+    return item.code.toLowerCase() === normalizedQuery || item.name.toLowerCase() === normalizedQuery;
+  });
+
+  if (exactMatch) {
+    goToTeam(exactMatch.code);
+  }
 }
 
 function filterTeamCards(query) {

@@ -409,6 +409,13 @@ a {
   gap: 8px;
 }
 
+.team-toolbar .search-input {
+  flex: 1 1 260px;
+  width: auto;
+  min-width: min(260px, 100%);
+  box-shadow: none;
+}
+
 .album-spread {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));

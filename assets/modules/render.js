@@ -45,7 +45,7 @@ export function renderHomeHtml({ totals, countOwned }) {
     </section>
 
     <section class="search-panel" aria-label="Search collections">
-      <input class="search-input" type="search" placeholder="Search country, FWC, Coca-Cola, or code" data-team-search />
+      ${renderSearchInput("filter")}
       <p class="search-empty hidden" data-search-empty>No matching collections.</p>
     </section>
 
@@ -69,6 +69,7 @@ export function renderTeamHtml({ item, owned, missing }) {
   return `
     <div class="team-toolbar">
       <a class="button ghost" href="#/">Back to groups</a>
+      ${renderSearchInput("navigate")}
       <div class="team-nav">
         <button
           class="button ghost"
@@ -89,6 +90,23 @@ export function renderTeamHtml({ item, owned, missing }) {
     </div>
 
     ${renderAlbumSpread(item, owned, missing)}
+  `;
+}
+
+function renderSearchInput(mode) {
+  return `
+    <input
+      class="search-input"
+      type="search"
+      list="collectionSearchOptions"
+      placeholder="Search country, FWC, Coca-Cola, or code"
+      data-team-search="${mode}"
+    />
+    <datalist id="collectionSearchOptions">
+      ${TICKET_DATA.flatMap((group) => group.teams)
+        .map((item) => `<option value="${escapeHtml(item.code)}">${escapeHtml(item.name)}</option>`)
+        .join("")}
+    </datalist>
   `;
 }
 
