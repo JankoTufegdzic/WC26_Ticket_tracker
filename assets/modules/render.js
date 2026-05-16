@@ -117,7 +117,6 @@ export function renderPrintReportHtml(groups) {
   return `
     <div class="print-page">
       <h1>WC26 Remaining Tickets</h1>
-      <p>${new Date().toLocaleDateString()}</p>
       ${
         leadingGroups.length
           ? `<div class="print-featured-list">${leadingGroups.map((group) => renderPrintGroup(group, "featured")).join("")}</div>`

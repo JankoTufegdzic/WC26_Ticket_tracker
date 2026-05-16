@@ -740,13 +740,14 @@ input {
   }
 
   .print-list {
-    columns: 3 58mm;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     column-gap: 6mm;
+    row-gap: 3.5mm;
   }
 
   .print-group {
     display: block;
-    margin: 0 0 3.5mm;
     break-inside: avoid;
     page-break-inside: avoid;
   }
